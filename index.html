@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ff4777" />
+  <meta name="description" content="Coração do Estudo — cronômetro de foco e acompanhamento de estudos." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Coração do Estudo</title>
+</head>
+<body>
+  <div class="background-shape shape-one"></div>
+  <div class="background-shape shape-two"></div>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#inicio">
+        <span class="brand-icon">♥</span>
+        <span><strong>Coração</strong><small>do Estudo</small></span>
+      </a>
+
+      <nav class="side-nav">
+        <button class="nav-item active" data-page="inicio"><span class="nav-icon">⌂</span><span>Início</span></button>
+        <button class="nav-item" data-page="foco"><span class="nav-icon">◉</span><span>Foco</span></button>
+        <button class="nav-item" data-page="estatisticas"><span class="nav-icon">▥</span><span>Estatísticas</span></button>
+        <button class="nav-item" data-page="conquistas"><span class="nav-icon">♛</span><span>Conquistas</span></button>
+      </nav>
+
+      <div class="sidebar-card">
+        <span>🔥</span>
+        <div><strong id="sidebarStreak">0 dias</strong><small>Sequência atual</small></div>
+      </div>
+
+      <button class="profile-button" id="openSettings">
+        <span class="avatar" id="avatarLetter">E</span>
+        <span><strong id="profileName">Estudante</strong><small>Editar perfil</small></span>
+      </button>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="pageEyebrow">SEU ESPAÇO DE FOCO</p>
+          <h1 id="pageTitle">Olá, <span id="headerName">estudante</span>! 💗</h1>
+          <p id="pageSubtitle">Cada minuto de estudo fortalece o seu futuro.</p>
+        </div>
+        <div class="top-actions">
+          <button class="icon-button" id="themeButton">☾</button>
+          <button class="primary-button compact" data-go-focus><span>▶</span> Começar foco</button>
+        </div>
+      </header>
+
+      <section class="page active" id="page-inicio">
+        <div class="dashboard-grid">
+          <article class="card hero-card">
+            <div class="hero-copy">
+              <span class="pill">PROGRESSO DE HOJE</span>
+              <h2>Seu coração cresce com cada sessão.</h2>
+              <p>Complete sua meta diária e mantenha uma rotina de estudos constante.</p>
+              <div class="hero-actions">
+                <button class="primary-button" data-go-focus><span>▶</span> Iniciar sessão</button>
+                <button class="secondary-button" data-page-jump="estatisticas">Ver relatório</button>
+              </div>
+              <div class="mini-stats">
+                <div><strong id="todayTimeHero">0min</strong><small>estudados hoje</small></div>
+                <div><strong id="goalRemaining">4h</strong><small>restantes da meta</small></div>
+              </div>
+            </div>
+
+            <div class="heart-stage">
+              <div class="orbit orbit-one"></div>
+              <div class="orbit orbit-two"></div>
+              <div class="floating-heart heart-a">♥</div>
+              <div class="floating-heart heart-b">♥</div>
+              <div class="heart-wrap" id="mainHeart">
+                <svg viewBox="0 0 200 180" class="main-heart-svg">
+                  <defs>
+                    <linearGradient id="heartGradient" x1="0" x2="1" y1="0" y2="1">
+                      <stop offset="0%" stop-color="#ff7b9e"/>
+                      <stop offset="55%" stop-color="#ff4777"/>
+                      <stop offset="100%" stop-color="#bc1550"/>
+                    </linearGradient>
+                    <filter id="heartShadow" x="-30%" y="-30%" width="160%" height="160%">
+                      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#cc174f" flood-opacity=".32"/>
+                    </filter>
+                  </defs>
+                  <path filter="url(#heartShadow)" fill="url(#heartGradient)" d="M100 163C78 145 29 112 17 73C7 41 25 16 53 14C73 13 89 24 100 41C111 24 127 13 147 14C175 16 193 41 183 73C171 112 122 145 100 163Z"/>
+                  <path d="M54 33C43 34 34 42 31 54" fill="none" stroke="white" stroke-opacity=".56" stroke-width="9" stroke-linecap="round"/>
+                </svg>
+                <div class="heart-percent"><strong id="heartPercent">0%</strong><span>da meta</span></div>
+              </div>
+              <div class="heart-shadow"></div>
+            </div>
+          </article>
+
+          <article class="card today-card">
+            <div class="card-heading">
+              <div><span class="section-icon pink">⏱</span><div><h3>Sessão de estudo</h3><p>Acompanhe sua meta diária.</p></div></div>
+              <span class="status-dot">Hoje</span>
+            </div>
+            <div class="today-progress">
+              <div><small>Tempo estudado</small><strong id="todayTime">0min</strong><span>Meta: <b id="dailyGoalLabel">4h</b></span></div>
+              <div class="progress-ring" id="progressRing"><span id="progressRingText">0%</span></div>
+            </div>
+            <div class="linear-progress"><span id="dailyProgressBar"></span></div>
+            <button class="primary-button full" data-go-focus>Começar foco</button>
+          </article>
+
+          <article class="card subjects-card">
+            <div class="card-heading simple">
+              <div><span class="section-icon purple">Σ</span><div><h3>Matérias</h3><p>Tempo acumulado por disciplina.</p></div></div>
+              <button class="text-button" id="addSubjectButton">+ Adicionar</button>
+            </div>
+            <div class="subject-list" id="subjectList"></div>
+          </article>
+
+          <article class="card streak-card">
+            <div class="card-heading simple">
+              <div><span class="section-icon orange">🔥</span><div><h3>Sua sequência</h3><p>Estude um pouco todos os dias.</p></div></div>
+            </div>
+            <div class="streak-number"><strong id="streakDays">0</strong><span>dias seguidos</span></div>
+            <div class="week-days" id="weekDays"></div>
+            <p class="encouragement" id="streakMessage">Comece hoje a sua sequência!</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="page" id="page-foco">
+        <div class="focus-layout">
+          <article class="card focus-card">
+            <div class="focus-top">
+              <div>
+                <span class="pill light">MODO FOCO</span>
+                <h2>Proteja este tempo para você.</h2>
+                <p>Escolha a matéria, ajuste o tempo e deixe o coração acompanhar sua sessão.</p>
+              </div>
+              <div class="focus-status" id="focusStatus"><span></span> Preparando</div>
+            </div>
+
+            <div class="focus-controls-row">
+              <label>Matéria<select id="focusSubject"></select></label>
+              <label>Duração
+                <select id="durationSelect">
+                  <option value="25">25 minutos</option>
+                  <option value="45" selected>45 minutos</option>
+                  <option value="60">60 minutos</option>
+                  <option value="90">90 minutos</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="timer-zone">
+              <div class="timer-ring" id="timerRing">
+                <div class="timer-heart" id="timerHeart">♥</div>
+                <strong id="timerDisplay">45:00</strong>
+                <span id="timerCaption">Pronto para começar</span>
+              </div>
+            </div>
+
+            <div class="timer-buttons">
+              <button class="secondary-button" id="resetTimer">↺ Reiniciar</button>
+              <button class="primary-button big" id="startPauseTimer">▶ Iniciar</button>
+              <button class="danger-button" id="finishTimer">■ Finalizar</button>
+            </div>
+
+            <div class="focus-tip">
+              <span>💡</span>
+              <p><strong>Agora conta em segunda tela:</strong> pode trocar de aba, sair da tela de foco ou minimizar. Quando voltar, o tempo será calculado pelo relógio real.</p>
+            </div>
+
+            <div class="background-counter-note">
+              <span>⏳</span>
+              <p>O site salva o horário de término da sessão. Assim, mesmo se o navegador pausar animações, o cronômetro continua certo.</p>
+            </div>
+          </article>
+
+          <aside class="focus-side">
+            <article class="card">
+              <div class="card-heading simple">
+                <div><span class="section-icon pink">♥</span><div><h3>Durante a sessão</h3><p>O coração pulsa enquanto você estuda.</p></div></div>
+              </div>
+              <ul class="check-list">
+                <li><span>✓</span> Cronômetro por horário real</li>
+                <li><span>✓</span> Continua fora da página</li>
+                <li><span>✓</span> Registro automático ao terminar</li>
+              </ul>
+            </article>
+            <article class="card quote-card">
+              <span>“</span>
+              <blockquote>Cada minuto de estudo fortalece o seu futuro.</blockquote>
+              <small>Coração do Estudo</small>
+            </article>
+          </aside>
+        </div>
+      </section>
+
+      <section class="page" id="page-estatisticas">
+        <div class="stats-summary">
+          <article class="summary-card"><span class="summary-icon pink">⏱</span><div><small>Total estudado</small><strong id="totalStudyTime">0min</strong><span>todas as sessões</span></div></article>
+          <article class="summary-card"><span class="summary-icon purple">◷</span><div><small>Média diária</small><strong id="averageStudyTime">0min</strong><span>nos últimos 7 dias</span></div></article>
+          <article class="summary-card"><span class="summary-icon orange">🔥</span><div><small>Sequência atual</small><strong id="statsStreak">0 dias</strong><span>continue assim</span></div></article>
+          <article class="summary-card"><span class="summary-icon blue">✓</span><div><small>Sessões concluídas</small><strong id="sessionCount">0</strong><span>no total</span></div></article>
+        </div>
+
+        <div class="stats-grid">
+          <article class="card chart-card">
+            <div class="card-heading simple">
+              <div><span class="section-icon pink">▥</span><div><h3>Horas estudadas</h3><p>Seu desempenho nos últimos sete dias.</p></div></div>
+              <span class="status-dot">Semana</span>
+            </div>
+            <div class="bar-chart" id="weeklyChart"></div>
+          </article>
+
+          <article class="card progress-hearts-card">
+            <div class="card-heading simple">
+              <div><span class="section-icon pink">♥</span><div><h3>Seu progresso</h3><p>Cada coração representa uma sessão.</p></div></div>
+            </div>
+            <div class="heart-collection" id="heartCollection"></div>
+            <div class="collection-footer"><span id="collectionText">0 sessões concluídas</span><span id="nextHeartText">Próximo marco: 5</span></div>
+          </article>
+
+          <article class="card history-card">
+            <div class="card-heading simple">
+              <div><span class="section-icon blue">≡</span><div><h3>Histórico recente</h3><p>Suas últimas sessões de estudo.</p></div></div>
+              <button class="text-button danger-text" id="clearHistory">Limpar</button>
+            </div>
+            <div class="history-list" id="historyList"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="page" id="page-conquistas">
+        <div class="achievement-hero card">
+          <div><span class="pill">SUAS CONQUISTAS</span><h2>Pequenas vitórias criam grandes resultados.</h2><p>Continue estudando para desbloquear todos os emblemas.</p></div>
+          <div class="trophy-illustration">🏆</div>
+        </div>
+        <div class="achievement-grid" id="achievementGrid"></div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="mobile-nav">
+    <button class="mobile-nav-item active" data-page="inicio"><span>⌂</span>Início</button>
+    <button class="mobile-nav-item" data-page="foco"><span>◉</span>Foco</button>
+    <button class="mobile-nav-item" data-page="estatisticas"><span>▥</span>Estatísticas</button>
+    <button class="mobile-nav-item" data-page="conquistas"><span>♛</span>Conquistas</button>
+  </nav>
+
+  <div class="modal-backdrop" id="settingsModal" hidden>
+    <div class="modal">
+      <button class="modal-close" data-close-modal>×</button>
+      <h2>Personalizar perfil</h2>
+      <p>Essas informações ficam salvas apenas neste navegador.</p>
+      <form id="settingsForm">
+        <label>Seu nome<input type="text" id="nameInput" maxlength="30" placeholder="Ex.: Davi" /></label>
+        <label>Meta diária de estudo
+          <select id="goalInput">
+            <option value="60">1 hora</option>
+            <option value="120">2 horas</option>
+            <option value="180">3 horas</option>
+            <option value="240">4 horas</option>
+            <option value="300">5 horas</option>
+            <option value="360">6 horas</option>
+          </select>
+        </label>
+        <button class="primary-button full" type="submit">Salvar alterações</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="subjectModal" hidden>
+    <div class="modal">
+      <button class="modal-close" data-close-subject-modal>×</button>
+      <h2>Adicionar matéria</h2>
+      <p>Crie uma nova disciplina para usar nas sessões.</p>
+      <form id="subjectForm">
+        <label>Nome da matéria<input type="text" id="subjectInput" maxlength="24" placeholder="Ex.: Biologia" required /></label>
+        <button class="primary-button full" type="submit">Adicionar matéria</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
